@@ -1,0 +1,10 @@
+<application>
+  <component name="atlassian-ide-plugin">
+    <option name="generalConfigurationData">
+      <GeneralConfigurationBean>
+        <option name="anonymousEnhancedFeedbackEnabled" value="true" />
+        <option name="uid" value="1427026301424" />
+      </GeneralConfigurationBean>
+    </option>
+  </component>
+</application>
