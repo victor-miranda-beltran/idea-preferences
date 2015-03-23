@@ -19,5 +19,7 @@
     <property name="decompiler.legal.notice.accepted" value="true" />
     <property name="ProjectStructure.SecondLevelElements" value="0.2" />
     <property name="ProjectStructure.TopLevelElements" value="0.15" />
+    <property name="CommitChangeListDialog.SPLITTER_PROPORTION_2" value="0.5" />
+    <property name="CommitChangeListDialog.DETAILS_SHOW_OPTION_" value="false" />
   </component>
 </application>
