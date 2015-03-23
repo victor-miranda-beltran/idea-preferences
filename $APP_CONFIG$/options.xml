@@ -16,5 +16,8 @@
     <property name="Non-Project Files" value="Yellow" />
     <property name="Tests" value="Green" />
     <property name="FindSplitterProportion" value="0.25" />
+    <property name="decompiler.legal.notice.accepted" value="true" />
+    <property name="ProjectStructure.SecondLevelElements" value="0.2" />
+    <property name="ProjectStructure.TopLevelElements" value="0.15" />
   </component>
 </application>
