@@ -9,5 +9,6 @@
     <toolWindow group="HotSwap" />
     <toolWindow group="Vcs Messages" />
     <toolWindow group="JavaEE" />
+    <toolWindow group="Grunt Console" />
   </component>
 </application>
