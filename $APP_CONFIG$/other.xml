@@ -54,6 +54,7 @@
     <option name="RENAME_SEARCH_IN_COMMENTS_FOR_CLASS" value="false" />
     <option name="RENAME_SEARCH_FOR_TEXT_FOR_CLASS" value="false" />
     <option name="INTRODUCE_CONSTANT_VISIBILITY" value="public" />
+    <option name="INTRODUCE_LOCAL_CREATE_FINALS" value="false" />
   </component>
   <component name="VcsApplicationSettings" PATCH_STORAGE_LOCATION="$USER_HOME$/Google Drive">
     <option name="PATCH_STORAGE_LOCATION" value="$USER_HOME$/Google Drive" />
