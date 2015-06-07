@@ -139,6 +139,16 @@
           <method />
         </configuration>
       </component>
+      <component name="SbtLocalSettings">
+        <option name="modificationStamps">
+          <map>
+            <entry key="$USER_HOME$/Projects/ourtaskr" value="1433685031000" />
+          </map>
+        </option>
+        <option name="externalProjectsViewState">
+          <projects_view />
+        </option>
+      </component>
     </defaultProject>
   </component>
 </application>
