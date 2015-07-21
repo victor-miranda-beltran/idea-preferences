@@ -6,6 +6,10 @@
           <option name="url" value="https://github.com/victormiranda/homr-app.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://victormiranda@bitbucket.org/victormiranda/hibernate.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="$USER_HOME$/Projects" />
