@@ -1,8 +1,8 @@
 <application>
   <component name="FindSettings">
-    <option name="customScope" value="Project 'homr'" />
-    <option name="defaultScopeName" value="Project 'homr'" />
-    <option name="SEARCH_SCOPE" value="Project 'homr'" />
+    <option name="customScope" value="Project 'homr-app'" />
+    <option name="defaultScopeName" value="Project 'homr-app'" />
+    <option name="SEARCH_SCOPE" value="Project 'homr-app'" />
     <recentFileMasks>
       <mask>*.properties</mask>
       <mask>*.html</mask>

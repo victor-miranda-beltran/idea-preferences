@@ -1,0 +1,13 @@
+<application>
+  <component name="SonarQubeSettings">
+    <option name="servers">
+      <list>
+        <SonarQubeServer>
+          <option name="id" value="thor" />
+          <option name="url" value="http://thor:9000" />
+          <option name="username" value="admin" />
+        </SonarQubeServer>
+      </list>
+    </option>
+  </component>
+</application>
