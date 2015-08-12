@@ -1,0 +1,35 @@
+Index: bower.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- bower.json	(date 1439322562000)
++++ bower.json	(revision )
+@@ -4,6 +4,7 @@
+   "devDependencies": {
+     "angular": "1.2.28",
+     "angular-mocks": "1.2.28",
++    "angular-growl-2": "0.7.3",
+     "bootstrap": "3.3.4",
+     "angular-ui-router": "0.2.14"
+   },
+Index: src/app/browser/browser.controller.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/browser/browser.controller.js	(date 1439322562000)
++++ src/app/browser/browser.controller.js	(revision )
+@@ -1,7 +1,9 @@
+ angular.module('browser-exercise.browserController', [
+-    'browser-exercise.browserService'
++    'browser-exercise.browserService',
++    'angular-growl'
+ ])
+-    .controller('BrowserController', function BrowserController($scope, _BrowserService_){
++    .controller('BrowserController', function BrowserController($scope, _BrowserService_, growl){
+         console.log('Browser controller');
++        growl.error("Wololo");
+     })
+ ;
+\ No newline at end of file

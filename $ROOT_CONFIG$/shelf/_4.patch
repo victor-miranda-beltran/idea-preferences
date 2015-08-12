@@ -1,0 +1,189 @@
+Index: src/app/browser/browser.tpl.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/browser/browser.tpl.html	(date 1439322562000)
++++ src/app/browser/browser.tpl.html	(revision )
+@@ -1,4 +1,4 @@
+-<div id="browser" class="panel">
++<div id="browser" class="panel" ng-init="inita()">
+     <div class="row">
+         <div class="col-md-12">
+             <h1>REST client exercise</h1>
+@@ -7,7 +7,13 @@
+ 
+     <div class="row">
+         <div class="col-md-10">
+-            <input type="search" autofocus class="search-query form-control" placeholder="Search" />
++            <input
++                    type="search"
++                    ng-model="filter"
++                    ng-model-options="{ debounce: 500 }"
++                    autofocus
++                    class="search-query form-control"
++                    placeholder="Search" />
+         </div>
+         <div class="col-md-2">
+             <input type="button"  class="btn btn-warning pull-right" value="Generate error" />
+@@ -24,21 +30,13 @@
+                     <th>End of era</th>
+                 </tr>
+                 </thead>
+-                <tr>
+-                    <td>a</td>
+-                    <td>b</td>
+-                    <td>1014-11-17T00:00:00.000+00:00</td>
++                <tbody>
++                    <tr ng-repeat="anc in ancients">
++                        <td>{{anc.name | uppercase}}</td>
++                        <td>{{anc.superpower | uppercase}}</td>
++                        <td>{{anc.end_of_an_era | date | uppercase }}</td>
+-                </tr>
++                    </tr>
+-                <tr>
+-                    <td>b</td>
+-                    <td>a</td>
+-                    <td>1014-11-17T00:00:00.000+00:00</td>
+-                </tr>
+-                <tr>
+-                    <td>a</td>
+-                    <td>s</td>
+-                    <td>1014-11-17T00:00:00.000+00:00</td>
+-                </tr>
++                </tbody>
+             </table>
+         </div>
+ 
+\ No newline at end of file
+Index: src/app/browser/browser.service.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/browser/browser.service.js	(date 1439322562000)
++++ src/app/browser/browser.service.js	(revision )
+@@ -1,32 +1,60 @@
+ angular.module('browser-exercise.browserService', [])
+-    .service('BrowserService', function($http){
++    .service('BrowserService', function($http, $cacheFactory){
+       var API = {
+-        'endpoint' : 'https://athena-7.herokuapp.com/ancients.json'
++        'endpoint' : 'https://api.github.com/users/mralexgray/repos'
+       };
+ 
++      //these could be together, because cacheAll is cacheSearch of a empty search
++      var cacheSearch = $cacheFactory("ancientSearch");
++      var cacheAll = $cacheFactory("ancientAll");
++
+       /**
+        *
+-       * @returns {HttpPromise}
++       * @param successCallback
+        */
+-      this.fetchAll = function() {
+-        return $http.get(API.endpoint);
++      this.fetchAll = function(successCallback) {
++        var res = cacheAll.get("cacheAll");
++
++        if (res) {
++          successCallback(res);
++        } else {
++            $http.get(API.endpoint).then(function (res) {
++            cacheAll.put("cacheAll", res);
++            successCallback(res);
++          });
++        }
+       };
+ 
+       /**
+        *
+        * @param input
+-       * @returns {HttpPromise}
++       * @param successCallback
+        */
+-      this.search = function(input) {
+-        return $http.get(API.endpoint + '?search=' + input);
++      this.search = function(input, successCallback) {
++        var res = cacheSearch.get(input);
++
++        if (res) {
++          successCallback(res);
++        } else {
++          $http.get(API.endpoint + '?search=' + input).then(function(res) {
++            cacheSearch.put(input, res);
++            successCallback(res);
++          });
++        }
+       };
+ 
+       /**
+        *
+-       * @returns {HttpPromise}
++       * @param errorCallback
+        */
+-      this.error = function(){
+-        return $http.get(API.endpoint + '?error=true');
++      this.error = function(errorCallback){
++        $http.get(API.endpoint + '?error=true').then(
++            function(){
++              console.log('Error without error code');
++            }, function(error) {
++              errorCallback(error);
++            }
++        );
+       };
+ 
+     })
+\ No newline at end of file
+Index: bower.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- bower.json	(date 1439322562000)
++++ bower.json	(revision )
+@@ -2,8 +2,8 @@
+   "name": "angular-seed",
+   "version": "0.0.1",
+   "devDependencies": {
+-    "angular": "1.2.28",
+-    "angular-mocks": "1.2.28",
++    "angular": "1.3",
++    "angular-mocks": "1.3",
+     "bootstrap": "3.3.4",
+     "angular-ui-router": "0.2.14"
+   },
+Index: src/app/browser/browser.controller.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/browser/browser.controller.js	(date 1439322562000)
++++ src/app/browser/browser.controller.js	(revision )
+@@ -2,6 +2,23 @@
+     'browser-exercise.browserService'
+ ])
+     .controller('BrowserController', function BrowserController($scope, _BrowserService_){
+-        console.log('Browser controller');
++        $scope.ancients = [];
++        $scope.filter = "";
++
++        $scope.init = function() {
++           _BrowserService_.fetchAll(function(res) {
++               $scope.ancients = res.data;
++           });
++        };
++
++        $scope.search = function(filter) {
++            _BrowserService_.search(filter, function(res) {
++                $scope.ancients = res.data;
++            });
++        };
++
++        $scope.$watch("filter", function() {
++           $scope.search($scope.filter);
++        });
+     })
+ ;
+\ No newline at end of file
